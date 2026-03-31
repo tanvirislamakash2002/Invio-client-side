@@ -1,66 +1,55 @@
-import { NextRequest, NextResponse } from "next/server"
-// import { userService } from "./services/user.service"
-import { Roles } from "./constants/roles";
+import { NextRequest, NextResponse } from "next/server";
+import { userService } from "./services/user.service";
 
 export const proxy = async (request: NextRequest) => {
     const pathName = request.nextUrl.pathname;
-    let isAuthenticated = false
 
-    // const { data } = await userService.getSession()
-    // if (data) {
-    //     isAuthenticated = true
-    // }
+    let isAuthenticated = false;
+    let user = null;
 
-    // if (!isAuthenticated) {
-    //     return NextResponse.redirect(new URL("/login", request.url))
-    // }
-    // if (
-    //     (data.user.role === Roles.admin) &&
-    //     (
-    //         pathName.startsWith('/seller') ||
-    //         pathName.startsWith('/cart') ||
-    //         pathName.startsWith('/checkout') ||
-    //         pathName.startsWith('/orders')
-    //     )
-    // ) {
-    //     return NextResponse.redirect(new URL("/admin", request.url))
-    // }
-    // if (
-    //     (data.user.role === Roles.customer) &&
-    //     (
-    //         pathName.startsWith('/seller') ||
-    //         pathName.startsWith('/admin')
-    //     )
-    // ) {
-    //     return NextResponse.redirect(new URL("/", request.url))
-    // }
-    // if (
-    //     (data.user.role === Roles.seller) &&
-    //     (
-    //         pathName.startsWith('/cart') ||
-    //         pathName.startsWith('/checkout') ||
-    //         pathName.startsWith('/orders')
-    //     )
-    // ) {
-    //     return NextResponse.redirect(new URL("/", request.url))
-    // }
-    // if (
-    //     (data.user.role === Roles.seller) &&
-    //     (pathName.startsWith('/admin'))
-    // ) {
-    //     return NextResponse.redirect(new URL("/seller", request.url))
-    // }
+    try {
+        const { data } = await userService.getSession();
+        if (data?.user) {
+            isAuthenticated = true;
+            user = data.user;
+        }
+    } catch (error) {
+        isAuthenticated = false;
+    }
 
-    return NextResponse.next()
-}
+    //  If not logged in → redirect to login
+    if (!isAuthenticated) {
+        return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    //  Role-based access control
+    const role = user.role;
+
+    //  STAFF restrictions
+    if (role === "STAFF") {
+        if (pathName.startsWith("/admin")) {
+            return NextResponse.redirect(new URL("/dashboard", request.url));
+        }
+    }
+
+    //  MANAGER restrictions
+    if (role === "MANAGER") {
+        if (pathName.startsWith("/admin/settings")) {
+            return NextResponse.redirect(new URL("/dashboard", request.url));
+        }
+    }
+
+    return NextResponse.next();
+};
 
 export const config = {
     matcher: [
-        // '/cart',
-        // '/checkout',
-        // '/orders',
-        // '/profile',
-        // '/seller/:path*',
-        // '/admin/:path*'
+        "/dashboard",
+        "/products/:path*",
+        "/categories/:path*",
+        "/orders/:path*",
+        "/restock/:path*",
+        "/admin/:path*",
+        "/settings/:path*"
     ]
-}
+};

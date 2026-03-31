@@ -37,7 +37,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Badge } from "@/components/ui/badge";
 
 interface User {
@@ -76,16 +76,16 @@ export function Navbar() {
     };
     fetchUser();
 
-    const fetchLowStockCount = async () => {
-      try {
-        const response = await fetch("/api/products/low-stock-count");
-        const data = await response.json();
-        setLowStockCount(data.count || 0);
-      } catch (error) {
-        console.error("Failed to fetch low stock count", error);
-      }
-    };
-    fetchLowStockCount();
+    // const fetchLowStockCount = async () => {
+    //   try {
+    //     const response = await fetch("/api/products/low-stock-count");
+    //     const data = await response.json();
+    //     setLowStockCount(data.count || 0);
+    //   } catch (error) {
+    //     console.error("Failed to fetch low stock count", error);
+    //   }
+    // };
+    // fetchLowStockCount();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -133,14 +133,14 @@ export function Navbar() {
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link href="/dashboard" className="flex items-center gap-2 shrink-0">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <Package className="h-4 w-4 text-primary-foreground" />
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md">
+                <span className="text-white font-bold text-lg">I</span>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                StockFlow
+              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                Invio
               </span>
               <span className="hidden sm:inline text-xs text-muted-foreground">
-                | Inventory Management
+                | Smart Inventory
               </span>
             </Link>
 
@@ -156,8 +156,8 @@ export function Navbar() {
                     className={cn(
                       "flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors",
                       active
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:text-primary hover:bg-muted"
+                        ? "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400"
+                        : "text-muted-foreground hover:text-indigo-600 hover:bg-muted dark:hover:text-indigo-400"
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -194,8 +194,8 @@ export function Navbar() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="flex items-center gap-2 px-2">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-sm font-medium text-primary">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <span className="text-sm font-medium text-white">
                           {user.name?.charAt(0).toUpperCase() || "U"}
                         </span>
                       </div>
@@ -258,8 +258,8 @@ export function Navbar() {
                   <Button asChild variant="ghost" size="sm">
                     <Link href="/login">Login</Link>
                   </Button>
-                  <Button asChild size="sm">
-                    <Link href="/signup">Sign Up</Link>
+                  <Button asChild size="sm" className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700">
+                    <Link href="/register">Register</Link>
                   </Button>
                 </div>
               )}
@@ -290,10 +290,12 @@ export function Navbar() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center gap-2"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                      <Package className="h-4 w-4 text-primary-foreground" />
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md">
+                      <span className="text-white font-bold text-lg">I</span>
                     </div>
-                    <span className="text-xl font-bold text-primary">StockFlow</span>
+                    <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                      Invio
+                    </span>
                   </Link>
                 </SheetTitle>
                 <Button
@@ -333,8 +335,8 @@ export function Navbar() {
                       className={cn(
                         "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors",
                         active
-                          ? "bg-primary/10 text-primary"
-                          : "text-foreground hover:bg-muted"
+                          ? "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400"
+                          : "text-foreground hover:bg-muted hover:text-indigo-600 dark:hover:text-indigo-400"
                       )}
                     >
                       <Icon className="h-5 w-5" />
@@ -355,8 +357,8 @@ export function Navbar() {
               {user ? (
                 <>
                   <div className="flex items-center gap-3 px-3 py-2 bg-muted/30 rounded-lg">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-base font-medium text-primary">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                      <span className="text-base font-medium text-white">
                         {user.name?.charAt(0).toUpperCase() || "U"}
                       </span>
                     </div>
@@ -421,7 +423,7 @@ export function Navbar() {
                     asChild
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Link href="/signup">Sign Up</Link>
+                    <Link href="/register">Register</Link>
                   </Button>
                 </>
               )}

@@ -87,44 +87,73 @@
   --chart-5: oklch(0.269 0 0);
 }
 
-/* Home page */
-@keyframes float-slow {
+/* auth page */
+@theme {
+  /* Custom animations */
+  @keyframes float {
     0%, 100% {
-        transform: translateY(0px);
+      transform: translateY(0px);
     }
     50% {
-        transform: translateY(-20px);
+      transform: translateY(-20px);
     }
-}
-
-@keyframes float-medium {
+  }
+  
+  @keyframes float-delayed {
     0%, 100% {
-        transform: translateY(0px) rotate(0deg);
+      transform: translateY(0px);
     }
     50% {
-        transform: translateY(-15px) rotate(5deg);
+      transform: translateY(20px);
     }
-}
-
-@keyframes float-fast {
-    0%, 100% {
-        transform: translateY(0px);
+  }
+  
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
-    50% {
-        transform: translateY(-10px);
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Animation utilities */
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-float-delayed: float-delayed 10s ease-in-out infinite;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out forwards;
+  --animate-fade-in: fade-in-up 0.4s ease-out forwards;
+  --animate-shimmer: shimmer 3s linear infinite;
 }
 
-.animate-float-slow {
-    animation: float-slow 6s ease-in-out infinite;
+.animate-float {
+  animation: var(--animate-float);
 }
 
-.animate-float-medium {
-    animation: float-medium 4s ease-in-out infinite;
+.animate-float-delayed {
+  animation: var(--animate-float-delayed);
 }
 
-.animate-float-fast {
-    animation: float-fast 3s ease-in-out infinite;
+.animate-fade-in-up {
+  animation: var(--animate-fade-in-up);
+}
+
+.animate-fade-in {
+  animation: var(--animate-fade-in);
+}
+
+.animate-shimmer {
+  animation: var(--animate-shimmer);
 }
 /* Home end */
 

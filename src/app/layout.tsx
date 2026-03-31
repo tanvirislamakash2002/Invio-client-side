@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MediGo",
+  title: "Invio",
   description: "A Medicine selling platform",
 };
 

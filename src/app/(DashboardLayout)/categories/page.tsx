@@ -2,6 +2,7 @@ import { getSession } from "@/actions/auth.action";
 import { getCategories } from "@/actions/category.action";
 import CategoryTable from "@/components/modules/categories/CategoryTable";
 import CreateCategoryDialog from "@/components/modules/categories/CreateCategoryDialog";
+import { Roles } from "@/constants/roles";
 
 export default async function CategoriesPage() {
     const { data } = await getCategories();
@@ -12,7 +13,7 @@ export default async function CategoriesPage() {
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold">Categories</h1>
 
-                {(user.role === "admin" || user.role === "manager") && (
+                {(user.role === Roles.admin || user.role === Roles.manager) && (
                     <CreateCategoryDialog user = {user} />
                 )}
             </div>

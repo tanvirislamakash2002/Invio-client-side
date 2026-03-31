@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Roles } from "@/constants/roles";
 
 export default function CreateCategoryDialog({user}:{user:any}) {
     const [open, setOpen] = useState(false);
@@ -56,7 +57,7 @@ export default function CreateCategoryDialog({user}:{user:any}) {
                 />
 
                 <Button onClick={handleSubmit}
-                disabled={!name.trim() || !(user.role === "admin" || user.role === "manager")}>Create</Button>
+                disabled={!name.trim() || !(user.role === Roles.admin || user.role === Roles.manager)}>Create</Button>
             </DialogContent>
         </Dialog>
     );

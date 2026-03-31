@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import DeleteCategoryButton from "./DeleteCategoryButton";
 import UpdateCategoryDialog from "./UpdateCategoryDialog";
+import { Roles } from "@/constants/roles";
 
 export default function CategoryTable({ categories, userRole }: any) {
     return (
@@ -16,7 +17,7 @@ export default function CategoryTable({ categories, userRole }: any) {
                 <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead>Description</TableHead>
-                    {(userRole === "ADMIN" || userRole === "MANAGER") && (
+                    {(userRole === Roles.admin || userRole === Roles.manager) && (
                         <TableHead>
                             Actions
                         </TableHead>
@@ -29,7 +30,7 @@ export default function CategoryTable({ categories, userRole }: any) {
                     <TableRow key={cat.id}>
                         <TableCell>{cat.name}</TableCell>
                         <TableCell>{cat.description || "-"}</TableCell>
-                        {(userRole === "ADMIN" || userRole === "MANAGER") && (
+                        {(userRole === Roles.admin|| userRole === Roles.manager) && (
                             <TableCell className="flex gap-2">
 
                                 <UpdateCategoryDialog category={cat} userRole={userRole} />

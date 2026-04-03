@@ -1,11 +1,7 @@
 import { createAuthClient } from "better-auth/react";
 
-const BACKEND_URL = process.env.NODE_ENV === "production"
-    ? "https://invio-server.vercel.app"
-    : "http://localhost:5000";
-
 export const authClient = createAuthClient({
-    baseURL: BACKEND_URL,
+    baseURL: typeof window !== "undefined" ? window.location.origin : "",
     fetchOptions: {
         credentials: "include",
     },

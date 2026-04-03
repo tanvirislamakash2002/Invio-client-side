@@ -185,12 +185,17 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
                       <Lock className="h-4 w-4 text-muted-foreground" />
                       Password
                     </Label>
-                    <Link
+                    {/* <Link
                       href="/forgot-password"
                       className="text-sm text-indigo-600 hover:underline"
                     >
                       Forgot password?
-                    </Link>
+                    </Link> */}
+                    <span
+                      className="text-sm text-indigo-600 hover:underline"
+                    >
+                      Forgot password?
+                    </span>
                   </div>
                   <div className="relative">
                     <Input

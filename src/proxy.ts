@@ -13,26 +13,34 @@ export const proxy = async (request: NextRequest) => {
             isAuthenticated = true;
             user = data.user;
         }
-    } catch (error) {
+    } catch {
         isAuthenticated = false;
     }
 
-    //  If not logged in → redirect to login
+    const authRoutes = ["/login", "/signup"];
+
+    //  Handle Auth Pages
+    if (authRoutes.includes(pathName)) {
+        if (isAuthenticated) {
+            return NextResponse.redirect(new URL("/dashboard", request.url));
+        }
+        return NextResponse.next(); // allow access
+    }
+
+    //  Handle Protected Routes
     if (!isAuthenticated) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    //  Role-based access control
+    //  Role-based access
     const role = user.role;
 
-    //  STAFF restrictions
     if (role === "STAFF") {
         if (pathName.startsWith("/admin")) {
             return NextResponse.redirect(new URL("/dashboard", request.url));
         }
     }
 
-    //  MANAGER restrictions
     if (role === "MANAGER") {
         if (pathName.startsWith("/admin/settings")) {
             return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -44,12 +52,14 @@ export const proxy = async (request: NextRequest) => {
 
 export const config = {
     matcher: [
+        "/login",
+        "/signup",
         "/dashboard",
         "/products/:path*",
         "/categories/:path*",
         "/orders/:path*",
         "/restock/:path*",
         "/admin/:path*",
-        "/settings/:path*"
-    ]
+        "/settings/:path*",
+    ],
 };

@@ -14,10 +14,13 @@ export const getSession = async () => {
 export const logout = async () => {
     try {
         const cookieStore = await cookies();
-        const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+        
+        // Get the actual cookie names from your browser
+        const sessionToken = cookieStore.get("__Secure-none.session_token")?.value;
         
         if (sessionToken) {
-            await fetch(`${env.AUTH_URL}/logout`, {
+            // Call the correct sign-out endpoint
+            await fetch(`${env.AUTH_URL}/sign-out`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -26,8 +29,9 @@ export const logout = async () => {
             });
         }
 
-        cookieStore.delete("better-auth.session_token");
-        cookieStore.delete("better-auth.session_data");
+        // Delete the actual cookie names
+        cookieStore.delete("__Secure-none.session_token");
+        cookieStore.delete("__Secure-none.session_data");
 
         return { success: true };
     } catch (error) {

@@ -28,10 +28,9 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { logout } from "@/actions/auth.action";
-import Link from "next/link";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { authClient } from "@/lib/auth-client";
 
 interface User {
     id: string;
@@ -99,13 +98,21 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const handleLogout = async () => {
+     const handleLogout = async () => {
         const toastId = toast.loading("Logging out...");
         try {
-            await logout();
-            toast.success("Logged out successfully", { id: toastId });
-            router.push("/login");
-            router.refresh();
+            await authClient.signOut({
+                fetchOptions: {
+                    onSuccess: () => {
+                        toast.success("Logged out successfully", { id: toastId });
+                        router.push("/login");
+                        router.refresh();
+                    },
+                    onError: () => {
+                        toast.error("Failed to logout", { id: toastId });
+                    }
+                }
+            });
         } catch (error) {
             toast.error("Failed to logout", { id: toastId });
         }
@@ -203,14 +210,14 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                                     {user.role.toLowerCase()}
                                 </p>
                             </div>
-                            <DropdownMenuSeparator />
+                            {/* <DropdownMenuSeparator />
                             <DropdownMenuItem asChild>
                                 <Link href="/profile" className="cursor-pointer">
                                     <User className="mr-2 h-4 w-4 flex-shrink-0" />
                                     <span className="truncate">Profile</span>
                                 </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
+                            <DropdownMenuSeparator /> */}
                             <DropdownMenuItem 
                                 onClick={handleLogout} 
                                 className="text-red-600 cursor-pointer"

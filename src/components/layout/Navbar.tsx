@@ -230,7 +230,7 @@ export function Navbar() {
                         </Badge>
                       </div>
                     </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
+                    {/* <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
                       <Link href="/profile" className="cursor-pointer">
                         <User className="mr-2 h-4 w-4" />
@@ -243,7 +243,7 @@ export function Navbar() {
                         Settings
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator />
+                    <DropdownMenuSeparator /> */}
                     <DropdownMenuItem
                       onClick={handleLogout}
                       className="text-red-600 cursor-pointer"

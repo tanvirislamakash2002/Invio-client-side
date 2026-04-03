@@ -1,4 +1,3 @@
-// app/products/add/page.tsx
 
 import { Suspense } from "react";
 import AddProductForm from "@/components/modules/products/add-product-form";

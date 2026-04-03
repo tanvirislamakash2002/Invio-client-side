@@ -262,7 +262,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <Button
+                    {/* <Button
                         variant="ghost"
                         className="w-full justify-start text-muted-foreground hover:text-foreground"
                         asChild
@@ -271,7 +271,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                             <User className="h-4 w-4 mr-2 flex-shrink-0" />
                             <span className="group-data-[collapsible=icon]:hidden truncate">Profile</span>
                         </Link>
-                    </Button>
+                    </Button> */}
                     <Button
                         variant="ghost"
                         className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"

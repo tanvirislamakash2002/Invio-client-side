@@ -34,6 +34,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { logout } from "@/actions/auth.action";
 import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
 
 interface User {
     id: string;
@@ -138,15 +139,15 @@ const getRoutes = (role: string) => {
     ];
 
     let routes = [...commonRoutes];
-    
+
     if (role === "ADMIN" || role === "MANAGER") {
         routes = [...routes, ...adminManagerRoutes];
     }
-    
+
     if (role === "ADMIN") {
         routes = [...routes, ...adminOnlyRoutes];
     }
-    
+
     return routes;
 };
 
@@ -154,16 +155,16 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
     const routes = getRoutes(user.role);
-    
+
     const isActive = (url: string) => {
         if (url === "/dashboard") return pathname === url;
         return pathname.startsWith(url);
     };
-    
+
     const handleLogout = async () => {
         const toastId = toast.loading("Logging out...");
         try {
-            await logout();
+            await authClient.signOut(); 
             toast.success("Logged out successfully", { id: toastId });
             router.push("/login");
             router.refresh();
@@ -171,7 +172,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             toast.error("Failed to logout", { id: toastId });
         }
     };
-    
+
     const getInitials = (name: string) => {
         return name
             .split(" ")
@@ -191,7 +192,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                 return "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400";
         }
     };
-    
+
     return (
         <Sidebar collapsible="icon" className="border-r shrink-0 h-screen sticky top-0" {...props}>
             {/* Sidebar Header */}
@@ -208,7 +209,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                     </span>
                 </Link>
             </SidebarHeader>
-            
+
             {/* Sidebar Content */}
             <SidebarContent className="flex-1 overflow-y-auto">
                 {routes.map((group) => (
@@ -221,7 +222,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                                 {group.items.map((item) => {
                                     const Icon = item.icon;
                                     const active = isActive(item.url);
-                                    
+
                                     return (
                                         <SidebarMenuItem key={item.title}>
                                             <SidebarMenuButton asChild isActive={active} tooltip={item.title}>
@@ -241,7 +242,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                     </SidebarGroup>
                 ))}
             </SidebarContent>
-            
+
             {/* Sidebar Footer */}
             <SidebarFooter className="border-t p-4 flex-shrink-0">
                 <div className="flex items-center gap-3 mb-3 min-w-0">
@@ -282,7 +283,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                     </Button>
                 </div>
             </SidebarFooter>
-            
+
             <SidebarRail />
         </Sidebar>
     );

@@ -2,8 +2,8 @@
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { redirect } from "next/navigation";
 import { userService } from "@/services/user.service";
-import { DashboardHeader } from "@/components/modules/layout/dashboard/dashboard-header";
-import { AppSidebar } from "@/components/modules/layout/dashboard/app-sidebar";
+import { DashboardHeader } from "@/components/layout/dashboard-header";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 
 export const dynamic = 'force-dynamic';
 

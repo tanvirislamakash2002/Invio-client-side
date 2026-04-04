@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { getSession, logout } from "@/actions/auth.action";
+import { getSession } from "@/actions/auth.action";
 import {
   Menu,
   X,
@@ -91,7 +91,6 @@ export function Navbar() {
   }, []);
 
   const handleLogout = async () => {
-    await logout();
     router.push("/login");
   };
 

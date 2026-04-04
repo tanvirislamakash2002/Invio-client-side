@@ -29,7 +29,6 @@ export const orderService = {
         },
         body: JSON.stringify(data),
       });
-console.log('order ser------------', res);
       const result = await res.json();
 
       if (!res.ok) {

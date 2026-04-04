@@ -6,7 +6,6 @@ import { orderService, CreateOrderPayload } from "@/services/order.service";
 export const createOrder = async (data: CreateOrderPayload) => {
   const res = await orderService.create(data);
   if (!res.error) updateTag("orders");
-  console.log('res action---------------',res);
   return res;
 };
 

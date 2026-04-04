@@ -32,7 +32,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { logout } from "@/actions/auth.action";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 

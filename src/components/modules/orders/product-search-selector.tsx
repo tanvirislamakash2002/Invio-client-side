@@ -139,7 +139,7 @@ export function ProductSearchSelector({
                         <div
                             key={product.id}
                             className={cn(
-                                "p-3 hover:bg-gray-100 cursor-pointer border-b last:border-0 dark:bg-gray-700",
+                                "p-3 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer border-b last:border-0 dark:bg-gray-700",
                                 selectedIndex === index && "bg-gray-100 dark:bg-gray-700"
                             )}
                             onClick={() => handleSelect(product)}

@@ -120,7 +120,7 @@ export function OrderForm() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="customerName">Customer Name *</Label>
+              <Label htmlFor="customerName" className="pb-2">Customer Name *</Label>
               <Input
                 id="customerName"
                 value={customerName}
@@ -130,7 +130,7 @@ export function OrderForm() {
               />
             </div>
             <div>
-              <Label htmlFor="customerEmail">Email (Optional)</Label>
+              <Label htmlFor="customerEmail" className="pb-2">Email (Optional)</Label>
               <Input
                 id="customerEmail"
                 type="email"
@@ -140,7 +140,7 @@ export function OrderForm() {
               />
             </div>
             <div>
-              <Label htmlFor="customerPhone">Phone (Optional)</Label>
+              <Label htmlFor="customerPhone" className="pb-2">Phone (Optional)</Label>
               <Input
                 id="customerPhone"
                 value={customerPhone}

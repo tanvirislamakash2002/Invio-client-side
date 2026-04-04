@@ -81,7 +81,7 @@ A modern, full-featured inventory management system for businesses to manage pro
 
 ## 📁 Project Structure
 
-
+```
 src/
 ├── app/
 │   ├── (auth)/           # Authentication pages
@@ -114,7 +114,7 @@ src/
 ├── lib/                 # Utilities
 │   └── utils.ts
 └── types/               # TypeScript interfaces
-
+```
 
 ## 🚦 Prerequisites
 

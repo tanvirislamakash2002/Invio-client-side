@@ -10,6 +10,7 @@ type CreateProductPayload = {
   price: number;
   stockQuantity: number;
   minStockThreshold: number;
+  status?: string;  // ← Added status field
 };
 
 type UpdateProductPayload = Partial<CreateProductPayload>;
@@ -27,7 +28,6 @@ export const productService = {
           Cookie: cookieStore.toString(),
         },
         body: JSON.stringify(data),
-        cache: "no-store",
       });
 
       const result = await res.json();
@@ -54,7 +54,6 @@ export const productService = {
           Cookie: cookieStore.toString(),
         },
         body: JSON.stringify(data),
-        cache: "no-store",
       });
 
       const result = await res.json();
@@ -79,7 +78,6 @@ export const productService = {
         headers: {
           Cookie: cookieStore.toString(),
         },
-        cache: "no-store",
       });
 
       const result = await res.json();
@@ -94,12 +92,27 @@ export const productService = {
     }
   },
 
-  // Get all products
-  getAll: async () => {
+  // Get all products with pagination and filters
+  getAll: async (params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    categoryId?: string;
+    status?: string;
+  }) => {
     try {
       const cookieStore = await cookies();
+      const query = new URLSearchParams();
+      
+      if (params?.page) query.append("page", params.page.toString());
+      if (params?.limit) query.append("limit", params.limit.toString());
+      if (params?.search) query.append("search", params.search);
+      if (params?.categoryId) query.append("categoryId", params.categoryId);
+      if (params?.status) query.append("status", params.status);
 
-      const res = await fetch(`${API_URL}/products`, {
+      const url = `${API_URL}/products${query.toString() ? `?${query.toString()}` : ""}`;
+
+      const res = await fetch(url, {
         headers: {
           Cookie: cookieStore.toString(),
         },
@@ -141,5 +154,22 @@ export const productService = {
       return { data: null, error: { message: "Fetch failed" } };
     }
   },
-}
-
+  getActiveProducts: async () => {
+  try {
+    const cookieStore = await cookies();
+    const res = await fetch(`${API_URL}/products?status=ACTIVE`, {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      next: { tags: ["products"] },
+    });
+    const result = await res.json();
+    if (!res.ok) {
+      return { data: null, error: { message: result.message } };
+    }
+    return { data: result.data, error: null };
+  } catch {
+    return { data: null, error: { message: "Fetch failed" } };
+  }
+},
+};

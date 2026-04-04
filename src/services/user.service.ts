@@ -1,7 +1,6 @@
 import { env } from "@/env";
 import { cookies } from "next/headers";
 
-const API_URL = env.API_URL;
 const AUTH_URL = env.AUTH_URL;
 
 export const userService = {
@@ -27,6 +26,4 @@ export const userService = {
             return { data: null, error: { message: 'Something went wrong' } };
         }
     },
-
-
 };

@@ -21,5 +21,16 @@ export const deleteProduct = async (id: string) => {
   return res;
 };
 
-export const getProducts = async () => productService.getAll();
+export const getProducts = async (params?: {
+  page?: number;
+  limit?: number;
+  search?: string;
+  categoryId?: string;
+  status?: string;
+}) => productService.getAll(params);
+
 export const getProductById = async (id: string) => productService.getById(id);
+
+export const getActiveProducts = async () => {
+  return productService.getActiveProducts();
+};

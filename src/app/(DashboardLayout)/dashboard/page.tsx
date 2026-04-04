@@ -59,7 +59,6 @@ export default async function DashboardPage() {
     getRecentActivities(5),
     getRevenueData(),
   ]);
-console.log(stats, products, recentOrders, recentActivities, revenueData);
   return (
     <div className="container mx-auto py-10 px-4 space-y-8">
       {/* Header */}

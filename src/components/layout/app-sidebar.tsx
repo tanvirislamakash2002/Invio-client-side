@@ -129,7 +129,7 @@ const getRoutes = (role: string) => {
             items: [
                 {
                     title: "User Management",
-                    url: "/admin/users",
+                    url: "/users-management",
                     icon: User,
                     roles: ["ADMIN"]
                 },
